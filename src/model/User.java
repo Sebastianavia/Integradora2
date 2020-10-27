@@ -5,15 +5,18 @@ public class User {
 	private String nickname;
 	private int age;
 	private String password; 
+	private int categorynum;
 	//Relatinship
 	private Category categoryType;
-	private Pool interface;
+	
+	
 
-	public User(String nickname, int age, String password, String categoryType) {
+	public User(String nickname, int age, String password) {
 		this.nickname = nickname;
 		this.age = age;
 		this.password = password;
-		this.categoryType =Category.valueOf(categoryType);
+		this.categorynum = 0;
+		this.categoryType =Category.NEWBIE;
 		
 	}
 	//getters 
@@ -26,8 +29,11 @@ public class User {
 	public String getPassword() {
 	return password;
 	}
-	public String getCategoryType() {
+	public Category getCategoryType() {
 	return categoryType;
+	}
+	public int getCategorynum() {
+	return categorynum;
 	}
 	//and setters
 	public void setNickname(String nickname) {
@@ -39,7 +45,21 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setCategoryType(String categoryType) {
+	public void setCategoryType(int categorynum) {
+		this.categorynum = categorynum;
+	}	
+	public void setCategorynum(Category categoryType) {
 		this.categoryType = categoryType;
 	}	
+
+	public String toString(){
+	
+		return 
+		"\n **********User***********" +
+		"\n Username: " + nickname +
+		"\n Age: " + age +
+		"\n Category: " + categoryType+
+		"\n *************************";
+	}
+
 }
