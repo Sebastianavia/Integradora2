@@ -19,6 +19,13 @@ public class MCS{
 	}
 	//________________________________________
 	//adds methods
+
+	/**
+	 * find the song we write <br>
+	 * <b> pre: we need the songs to have already been created </b> 
+	 * @param title song title
+	 * @return the song the user is looking for
+	 */
 	public Song findSong(String tittle){
 		Song objSearch=null;
 		boolean findSo=false;
@@ -30,7 +37,12 @@ public class MCS{
 		}
 		return objSearch;
 	}
-
+	/**
+	 * find the user we write <br>
+	 * <b> pre: we need users to have already been created </b> 
+	 * @param nickname user nickname
+	 * @return the user that user is looking for
+	 */
 	public User findUser(String nickname){
 		User objSearch=null;
 		boolean findUs=false;
@@ -42,6 +54,35 @@ public class MCS{
 		}
 		return objSearch;
 	}
+
+
+
+	public void updateRank(String nickname){  
+	    User objSearch = findUser(nickname); 
+	    objSearch.setCategorynum(objSearch.getCategorynum()+1);
+
+	    if(objSearch.getCategorynum() >=3 && objSearch.getCategorynum() < 10){
+
+	        objSearch.setCategoryType(objSearch.convert("LITTLECONTRIBUTOR"));
+
+	    }else if(objSearch.getCategorynum() >= 10 && objSearch.getCategorynum() < 30){
+
+	        objSearch.setCategoryType(objSearch.convert("MILDCONTRIBUTOR"));
+
+	    }else if(objSearch.getCategorynum() >= 30) {
+
+	        objSearch.setCategoryType(objSearch.convert("STARCONTRIBUTOR"));
+	    }
+
+	}
+
+
+	/**
+	 * find the playlist we write <br>
+	 * <b> pre: we need the playlist to have already been created, (can be; private, public, restricted) </b> 
+	 * @param name playlist name
+	 * @return the playlist taht user is looking for
+	 */
 	public Playlist findPlaylist(String name){
 		Playlist objSearch=null;
 		boolean findPl=false;
@@ -54,7 +95,14 @@ public class MCS{
 		return objSearch;
 	}
     
-
+	/**
+	 * add a new user <br>
+	 * <b> pre: we need to know the nickname, age, and password of the user </b> 
+	 * @param nickname user nickname
+	 * @param age user age
+	 * @param password user password
+	 * @return a message, if the user could be created or could not be created
+	 */
 	public String addUser (String nickname, int age, String password ){
 		String message="";
 		boolean addUs=false;
@@ -74,9 +122,16 @@ public class MCS{
 		}
 		return message;
 	}
+	/**
+	 * add a new public playlist <br>
+	 * <b> pre: we need the name of the playlist </b> 
+	 * @param name playlist name
+	 * @return a messag, if the public playlis could be created or could not be created
+	 */
 	public String addPlaylist(String name){
 		String message="";
 		boolean addPl=false;
+		
 		Playlist objSearch=findPlaylist(name);
 		if(objSearch!=null)
 			message="Error. the playlist already exist";
@@ -93,11 +148,29 @@ public class MCS{
 		}
 		return message;
 	}
+
+	public void calificationPublicPlaylist(double calification, String name){
+    Playlist objecPlaylist = findPlaylist(name);
+    if(objecPlaylist!=null){
+           if(objecPlaylist instanceof Public){
+               Public calificationPlaylist=(Public)objecPlaylist;
+
+               calificationPlaylist.setCalification(calification);
+           }
+       }
+	}
 	//___________________________________________________
-	public String addPlaylist(String name, String name1){
+	/**
+	 * add a new private playlist <br>
+	 * <b> pre: we need the user nickname and the name of the playlist  </b> 
+	 * @param name user name
+	 * @param nameprivate private playlist name
+	 * @return a messag, if the private playlis could be created or could not be created
+	 */
+	public String addPlaylist(String name, String nameprivate){
 		String message="";
 		boolean addPl=false;
-		User objuser = findUser(name1);
+		User objuser = findUser(nameprivate);
 		Playlist objSearch=findPlaylist(name);
 		if(objSearch!=null)
 			message="Error. the playlist already exist";
@@ -115,17 +188,23 @@ public class MCS{
 		return message;
 	}
 	//____________________________________________________
+	/**
+	 * add a new restricted playlist <br>
+	 * <b> pre: we need the playlist name and the name of up to 5 people  </b> 
+	 * @param name user name
+	 * @param resuser private playlist name 
+	 * @return a messag, if the restricted playlis could be created or could not be created
+	 */
 	public String addPlaylist(String name, String[] resuser){
 		String message="";
 		boolean addPl=false;
-
 		Playlist objSearch=findPlaylist(name);
-		if(objSearch!=null)
+		if(objSearch !=null)
 			message="Error. the playlist already exist";
 		else{
 			for (int i=0;i<MAX_PLAYLIST && !addPl;i++){
 				if (playlist[i]==null){
-					playlist[i]= new Restricted (name, restricted);
+					playlist[i]= new Restricted (name, resuser);
 					addPl=true;
 					message="The playlist has been registered";
 				}
@@ -138,7 +217,20 @@ public class MCS{
 
 	//_________________________________________________________________________________________________
 
-	public String addSong (int duration, String title,  String artist, String songGenre, String date ){
+	/**
+	 * add a new song <br>
+	 * <b> pre: we need the information of the song (name, artist, duration, release date and genre)  </b> 
+	 * @param duration duration of the song
+	 * @param tittle tittle of the song
+	 * @param artist artist song
+	 * @param songGenre genre of the song
+	 * @param date date of the song 
+	 * @return a messag, if the song could be created or could not be created
+	 */
+	public String addSong (String nickname,int duration, String title,  String artist, String songGenre, String date ){
+		User objuser=findUser(nickname);
+		//objuser.addcategorynum();
+		//objuser.updateCategory();
 		String message="";
 		boolean addSo=false;
 		Song objSearch=findSong(title);
@@ -157,6 +249,14 @@ public class MCS{
 		}
 		return message;
 	}
+	/**
+	 * add a song already created to a playlist already created<br>
+	 * <b> pre: we need the name of the song already created, the username alredy created and the name of the playlist alredy created </b> 
+	 * @param name playlist name
+	 * @param nickname user nickname
+	 * @param song song name
+	 * @return a messag, if the song, the playlist or the user has not been created
+	 */
 	public String addSongtoplaylist(String name, String nickname, String song){
 		String message ="";
 		boolean validate = true;
@@ -177,13 +277,49 @@ public class MCS{
 			if(objsong == null){
 				message += " no existe una cancion con ese nombre";
 			}
+
+          
+          
 		}
-		if(validate == true){
-			message += objplay.addSongtoplaylist(objsong, objuser);
-		}
+		else
+			message =objplay.addSongtoplaylist(objsong,objuser);
 		return message;
 	}
 	
+   
+
+	
+
+	public String showUsers(){
+		String message="";
+		for (int i=0;i<MAX_USER;i++){
+			if (user[i] !=null){
+				message+=user[i].toString();
+			}
+		}
+		return message;
+	}
+
+	public String showSongs(){
+			String message="";
+		for (int i=0;i<MAX_SONGS;i++){
+			if (song[i] !=null){
+				message+=song[i].toString();
+			}
+		}
+		return message;
+	}
+
+
+	public String showPlaylist(){
+			String message="";
+		for (int i=0;i<MAX_PLAYLIST;i++){
+			if (playlist[i] !=null){
+				message+=playlist[i].toString();
+			}
+		}
+		return message;
+	}
 
 	
 }

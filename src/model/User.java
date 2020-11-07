@@ -15,7 +15,7 @@ public class User {
 		this.nickname = nickname;
 		this.age = age;
 		this.password = password;
-		this.categorynum = 0;
+		this.categorynum = categorynum;
 		this.categoryType =Category.NEWBIE;
 		
 	}
@@ -45,21 +45,54 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setCategoryType(int categorynum) {
+	public void setCategorynum(int categorynum) {
 		this.categorynum = categorynum;
 	}	
-	public void setCategorynum(Category categoryType) {
+	public void setCategoryType(Category categoryType) {
 		this.categoryType = categoryType;
 	}	
 
+	public Category convert(String categoryType){
+        Category myUserType = Category.valueOf(categoryType);
+        return myUserType;
+
+    }
+
 	public String toString(){
-	
-		return 
-		"\n **********User***********" +
+	String message;
+	message=
+		"\n **********USER***********" +
 		"\n Username: " + nickname +
 		"\n Age: " + age +
 		"\n Category: " + categoryType+
 		"\n *************************";
+		return message;
 	}
+
+
+/*
+		public void categorynum(){
+		categorynum++;
+		}
+	
+
+	public void updateCategory(){
+		
+
+		if (categorynum <= 3){
+
+			categorynum=Category().NEWBIE;
+
+		}
+			else if (categorynum > 3 && categorynum <=10){
+				categorynum=Category().LITLECONTRIBUTOR;
+		} else {
+			if (categorynum > 10 && categorynum <=30)
+					categorynum=Category().MILDCONTRIBUTOR;
+		}else
+					categorynum=Category().STARCONTRIBUTOR;
+
+		}
+		*/
 
 }

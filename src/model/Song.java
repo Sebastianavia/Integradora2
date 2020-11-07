@@ -9,6 +9,15 @@ public class Song{
 	//Relationship
 	private Genre songGenre;
 	
+	/**
+	 * constructor method <br>
+	 * <b> pre: we need the atributes </b> 
+	 * @param duration song duration
+	 * @param tittle song tittle
+	 * @param artist song artist
+	 * @param songGenre song genre
+	 * @param date song date
+	 */
 	
 	public Song(int duration, String tittle,  String artist, String songGenre, String date) {
 		this.duration = duration;
@@ -27,7 +36,7 @@ public class Song{
 		public String getArtist() {
 		return artist;
 		}
-		public Genre getSongGenre() {
+		public Genre getGenre() {
 		return songGenre;
 		}
 		public String getDate() {
@@ -51,6 +60,12 @@ public class Song{
 			this.date = date;
 		}
 
+		/**
+		* convert time from just seconds to hours, minutes, and seconds <br>
+	 	* <b> pre: we need the time in seconds </b> 
+	 	* @return convert time
+	 	*/
+
 		public String duration(){
 		int num=0,hor=0,min=0,seg=0;
         String message="";
@@ -60,6 +75,20 @@ public class Song{
 
     	message=(": "+min+"m "+seg+"s\n");
    		return message;
+
+		}
+
+		public String toString(){
+			String message ="";
+
+			message = "\n******Song******"+
+			"\nTittle: " + tittle +
+			"\nArtist: " + artist +
+			"\nDuration: " + duration +
+			"\nGenre: " + songGenre +
+			"\n*************";
+
+			return message;
 
 		}
 }
